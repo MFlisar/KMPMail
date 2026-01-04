@@ -7,6 +7,7 @@ import com.michaelflisar.kmpdevtools.config.sub.DesktopAppConfig
 import com.michaelflisar.kmpdevtools.config.sub.WasmAppConfig
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -76,6 +77,17 @@ kotlin {
 
     buildTargets.setupTargetsApp(appModuleData)
 
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+    }
+
     // ------------------------
     // Source Sets
     // ------------------------
@@ -86,7 +98,15 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        // --
+        val commonMain by getting
+        val iosMain by creating { dependsOn(commonMain) }
+
+        buildTargets.setupDependencies(
+            iosMain,
+            sourceSets,
+            buildTargets,
+            listOf(com.michaelflisar.kmpdevtools.core.Platform.IOS)
+        )
 
         // ------------------------
         // dependencies
@@ -95,7 +115,7 @@ kotlin {
         commonMain.dependencies {
 
             // resources
-            api(compose.components.resources)
+            //implementation(compose.components.resources)
 
             // Modules
             implementation(project(":demo:shared"))

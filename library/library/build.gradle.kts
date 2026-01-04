@@ -5,6 +5,9 @@ import com.michaelflisar.kmpdevtools.config.sub.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import org.gradle.kotlin.dsl.add
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import org.jetbrains.kotlin.konan.target.KonanTarget
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -63,8 +66,55 @@ kotlin {
 
     // XCFrameworks
     // Expected folders in iosXCFramework: [cinterop, Headers, <frameworkName>.xcframework]
-    // ATTENTION: new frameworks must be added to iosApp as dependecies!
-    buildTargets.setupXCFramework(project, frameworkName = "LibraryFramework")
+    // ATTENTION: new frameworks must be added to the iosApp as dependecies!
+    //buildTargets.setupXCFramework(project, frameworkName = "LibraryFramework")
+
+    fun sliceDirFor(target: KonanTarget): String = when (target) {
+        KonanTarget.IOS_ARM64 -> "ios-arm64"
+        KonanTarget.IOS_X64 -> "ios-x86_64-simulator"
+        KonanTarget.IOS_SIMULATOR_ARM64 -> "ios-arm64_x86_64-simulator"
+        else -> error("Unsupported target: $target")
+    }
+    val frameworkName = "LibraryFramework"
+    val folderCInterop: File = project.file("iosXCFramework/cinterop")
+    val folderXCFramework: File = project.file("iosXCFramework/${frameworkName}.xcframework")
+    val relativeHeadersFolderInXCFramework = "Headers"
+    val xcf = XCFramework("LibraryFramework")
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.compilations.getByName("main") {
+
+            cinterops.create(frameworkName) {
+
+                // 1) add all .def files in the cinterop folder
+                val defFiles =
+                    folderCInterop.listFiles { file: File -> file.extension == "def" }
+                defFiles.forEach { defFile(it) }
+
+                // 2) include header dirs (cinterop + provided Headers folder)
+                val sliceDir =
+                    folderXCFramework.resolve(sliceDirFor(iosTarget.konanTarget))
+                includeDirs.allHeaders(
+                    sliceDir.resolve("$frameworkName.framework/$relativeHeadersFolderInXCFramework"),
+                    folderCInterop
+                )
+
+                // 3) compiler options
+                compilerOpts(
+                    "-F", sliceDir.absolutePath,
+                    "-framework", frameworkName
+                )
+            }
+        }
+        iosTarget.binaries.framework {
+            baseName ="LibraryFramework"
+            isStatic = true
+            xcf.add(this)
+        }
+    }
 
     // -------
     // Sources

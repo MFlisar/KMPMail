@@ -12,6 +12,34 @@
         "moduleName": "LibraryFramework"
       },
       {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "LibraryFramework"
+      },
+      {
+        "kind": "Import",
+        "name": "MessageUI",
+        "printedName": "MessageUI",
+        "declKind": "Import",
+        "moduleName": "LibraryFramework"
+      },
+      {
+        "kind": "Import",
+        "name": "UniformTypeIdentifiers",
+        "printedName": "UniformTypeIdentifiers",
+        "declKind": "Import",
+        "moduleName": "LibraryFramework"
+      },
+      {
+        "kind": "Import",
+        "name": "MobileCoreServices",
+        "printedName": "MobileCoreServices",
+        "declKind": "Import",
+        "moduleName": "LibraryFramework"
+      },
+      {
         "kind": "TypeDecl",
         "name": "LibraryFrameworkObjC",
         "printedName": "LibraryFrameworkObjC",
@@ -146,34 +174,6 @@
             "mangledName": "$ss28CustomDebugStringConvertibleP"
           }
         ]
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "LibraryFramework"
-      },
-      {
-        "kind": "Import",
-        "name": "MessageUI",
-        "printedName": "MessageUI",
-        "declKind": "Import",
-        "moduleName": "LibraryFramework"
-      },
-      {
-        "kind": "Import",
-        "name": "UniformTypeIdentifiers",
-        "printedName": "UniformTypeIdentifiers",
-        "declKind": "Import",
-        "moduleName": "LibraryFramework"
-      },
-      {
-        "kind": "Import",
-        "name": "MobileCoreServices",
-        "printedName": "MobileCoreServices",
-        "declKind": "Import",
-        "moduleName": "LibraryFramework"
       },
       {
         "kind": "TypeDecl",

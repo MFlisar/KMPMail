@@ -20,3 +20,5 @@ fun executeTest() : String {
  * @param chooserTitle The title of the chooser dialog
  */
 expect fun Feedback.startEmailChooser(chooserTitle: String)
+
+internal expect fun startEmailChooserImpl(feedback: Feedback, chooserTitle: String)

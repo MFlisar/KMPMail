@@ -6,12 +6,21 @@ import android.net.Uri
 import androidx.core.text.HtmlCompat
 import com.michaelflisar.cachefileprovider.CachedFileProvider
 
+actual fun test() = "test() from Android"
+
 actual fun Feedback.startEmailChooser(
-    chooserTitle: String
+    chooserTitle: String,
+) {
+    startEmailChooserImpl(this, chooserTitle)
+}
+
+internal actual fun startEmailChooserImpl(
+    feedback: Feedback,
+    chooserTitle: String,
 ) {
     val intent = buildIntent(
         context = AppContextProvider.context,
-        feedback = this,
+        feedback = feedback,
         chooserTitle = chooserTitle
     )
     AppContextProvider.context.startActivity(intent)
@@ -73,6 +82,3 @@ private fun copyToCache(context: Context, file: FeedbackFile): Uri {
     // 2) return uri for cache file
     return CachedFileProvider.getCacheFileUri(context, file.cacheFileName)
 }
-
-
-actual fun test() = "test() from Android"

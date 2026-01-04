@@ -4,12 +4,11 @@ import androidx.compose.ui.window.ComposeUIViewController
 import com.michaelflisar.feedbackmanager.demo.DemoApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import platform.UIKit.UIViewController
 
-/**
- * iOS entry point used by the Xcode demo project (demo/xcode).
- */
-fun MainViewController() = ComposeUIViewController {
+fun MainViewController(): UIViewController = ComposeUIViewController {
     DemoApp(
+        appName = BuildKonfig.appName,
         platform = "iOS",
         ioContext = Dispatchers.IO
     )

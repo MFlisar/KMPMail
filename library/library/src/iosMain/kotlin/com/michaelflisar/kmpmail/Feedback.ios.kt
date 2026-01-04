@@ -2,26 +2,34 @@ package com.michaelflisar.kmpmail
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import LibraryFramework.LibraryFrameworkObjC
-import MailSenderHelper.MailSenderHelper
+import LibraryFramework.MailSenderHelper
 
 actual fun Feedback.startEmailChooser(
     chooserTitle: String,
 ) {
-    val helper = MailSenderHelper()
-    for (receivers in this.receivers) {
-        helper.sendMailWithReceiver(
-            receivers = receivers,
-            //subject = this.subject,
-            //body = this.text ?: "",
-            //isBodyHtml = this.textIsHtml,
-            attachments = this.attachments.map { it.path },
-            //chooserTitle = chooserTitle
-        )
-    }
+    startEmailChooserImpl(this, chooserTitle)
 }
 
-@ExperimentalForeignApi
+@OptIn(ExperimentalForeignApi::class)
 actual fun test(): String {
     val api = LibraryFrameworkObjC()
     return api.test()
+}
+
+@OptIn(ExperimentalForeignApi::class)
+internal actual fun startEmailChooserImpl(
+    feedback: Feedback,
+    chooserTitle: String,
+) {
+    val helper = MailSenderHelper()
+    for (receiver in feedback.receivers) {
+        helper.sendMailWithReceiver(
+            receiver = receiver,
+            //subject = this.subject,
+            //body = this.text ?: "",
+            //isBodyHtml = this.textIsHtml,
+            attachments = feedback.attachments.map { it.path },
+            //chooserTitle = chooserTitle
+        )
+    }
 }

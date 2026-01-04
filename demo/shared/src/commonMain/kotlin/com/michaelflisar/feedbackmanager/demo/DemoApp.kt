@@ -27,19 +27,17 @@ import com.michaelflisar.kmpmail.Feedback
 import com.michaelflisar.kmpmail.FeedbackFile
 import com.michaelflisar.kmpmail.executeTest
 import com.michaelflisar.kmpmail.startEmailChooser
-import com.michaelflisar.kmpmail.shared.resources.Res
-import com.michaelflisar.kmpmail.shared.resources.app_name
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.files.SystemTemporaryDirectory
 import kotlinx.io.writeString
-import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DemoApp(
+    appName: String,
     platform: String,
     ioContext: CoroutineDispatcher,
 ) {
@@ -47,7 +45,6 @@ fun DemoApp(
         val snackbarHostState = remember { SnackbarHostState() }
         Scaffold(
             topBar = {
-                val appName = stringResource(Res.string.app_name)
                 TopAppBar(
                     title = { Text("$appName Demo") },
                     modifier = Modifier.fillMaxWidth(),
@@ -111,7 +108,7 @@ private fun DemoContent(
                     // begin-snippet: feedback
                     val mail = mail.value
                     val feedback = Feedback(
-                        receivers = listOf("mflisar.development@gmail.com"),
+                        receivers = listOf(mail),
                         subject = "Feedback from $platform Demo App",
                         text = "Please write your feedback here...\n\n",
                         textIsHtml = false,
