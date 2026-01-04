@@ -28,7 +28,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dokka/dokka/html
+          path: dokka/build/dokka/html
 
   deploy:
     needs: dokka
