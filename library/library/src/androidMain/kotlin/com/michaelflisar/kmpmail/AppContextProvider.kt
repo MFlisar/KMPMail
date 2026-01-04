@@ -7,9 +7,16 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 
+/**
+ * A ContentProvider to provide a global application context
+ */
 class AppContextProvider : ContentProvider() {
 
     companion object {
+
+        /**
+         * The application context
+         */
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
     }

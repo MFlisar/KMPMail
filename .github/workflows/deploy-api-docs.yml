@@ -23,7 +23,7 @@ jobs:
           java-version: 17
 
       - name: Build Dokka HTML
-        run: ./gradlew dokkaGeneratePublicationHtml
+        run: ./gradlew :dokka:dokkaGenerate
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

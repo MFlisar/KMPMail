@@ -61,6 +61,9 @@ includeModule("library/library", ":$libraryId:library")
 // Modules
 // --
 
+// Dokka
+include(":dokka")
+
 // --------------
 // App
 // --------------
