@@ -1,4 +1,0 @@
-language = Objective-C
-headers = ../Headers/LibraryFramework.h
-compilerOpts = -I${defFileDir}/../Headers -I${frameworkDir}/Headers
-linkerOpts = -framework LibraryFramework

@@ -6,24 +6,24 @@ import android.net.Uri
 import androidx.core.text.HtmlCompat
 import com.michaelflisar.cachefileprovider.CachedFileProvider
 
-actual fun test() = "test() from Android"
-
 actual fun Feedback.startEmailChooser(
     chooserTitle: String,
-) {
-    startEmailChooserImpl(this, chooserTitle)
-}
-
-internal actual fun startEmailChooserImpl(
-    feedback: Feedback,
-    chooserTitle: String,
-) {
+): Boolean {
     val intent = buildIntent(
         context = AppContextProvider.context,
-        feedback = feedback,
+        feedback = this,
         chooserTitle = chooserTitle
     )
-    AppContextProvider.context.startActivity(intent)
+    try {
+        AppContextProvider.context.startActivity(intent)
+    } catch (e: Exception) {
+        if (e is android.content.ActivityNotFoundException) {
+            return false
+        } else {
+            throw e
+        }
+    }
+    return true
 }
 
 private fun buildIntent(
@@ -36,14 +36,14 @@ private fun buildIntent(
     intent.type = if (single) "message/rfc822" else "text/plain"
     intent.putExtra(Intent.EXTRA_EMAIL, feedback.receivers.toTypedArray())
     intent.putExtra(Intent.EXTRA_SUBJECT, feedback.subject)
-    if (feedback.text != null) {
+    if (feedback.body != null && feedback.body.isNotEmpty()) {
         intent.putExtra(
             /* name = */ Intent.EXTRA_TEXT,
             /* value = */
-            if (feedback.textIsHtml) HtmlCompat.fromHtml(
-                feedback.text,
+            if (feedback.bodyIsHtml) HtmlCompat.fromHtml(
+                feedback.body,
                 HtmlCompat.FROM_HTML_MODE_LEGACY
-            ) else feedback.text
+            ) else feedback.body
         )
     }
 
@@ -72,13 +72,13 @@ private fun buildIntent(
 }
 
 private fun copyToCache(context: Context, file: FeedbackFile): Uri {
-    // 1) copy input file to cache file
+    // 1) copy input file to cache file => return a simple file (not shareable!)
     val cacheFile = CachedFileProvider.copyFileToCache(
         context,
         file.uri,
         file.cacheFileName
     )
 
-    // 2) return uri for cache file
+    // 2) return uri for cache file (shareable via FileProvider)
     return CachedFileProvider.getCacheFileUri(context, file.cacheFileName)
 }

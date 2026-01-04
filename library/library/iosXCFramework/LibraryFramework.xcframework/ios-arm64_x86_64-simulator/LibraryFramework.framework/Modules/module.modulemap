@@ -1,4 +1,0 @@
-framework module LibraryFramework {
-  header "LibraryFramework-Swift.h"
-  requires objc
-}

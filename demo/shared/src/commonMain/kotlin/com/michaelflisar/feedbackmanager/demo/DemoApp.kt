@@ -25,9 +25,9 @@ import com.michaelflisar.democomposables.layout.DemoRegion
 import com.michaelflisar.democomposables.layout.rememberDemoExpandedRegions
 import com.michaelflisar.kmpmail.Feedback
 import com.michaelflisar.kmpmail.FeedbackFile
-import com.michaelflisar.kmpmail.executeTest
 import com.michaelflisar.kmpmail.startEmailChooser
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -83,7 +83,6 @@ private fun DemoContent(
         DemoCollapsibleRegion(
             title = "Demos", regionId = 1, state = regionState
         ) {
-            Text("Test: " + executeTest())
             val mail = remember { mutableStateOf("") }
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -96,13 +95,13 @@ private fun DemoContent(
                     // create a test file in temp directory
                     // no need to make sure its shareable on android, the library does handle that for you...
                     val tempFolderPath = SystemTemporaryDirectory
-                    val tempFile = Path(tempFolderPath, "feedbackmanager_demo.txt")
+                    val tempFile = Path(tempFolderPath, "test.txt")
                     if (SystemFileSystem.exists(tempFile)) {
                         SystemFileSystem.delete(tempFile)
                     }
                     SystemFileSystem.sink(tempFile).use { sink ->
                         sink.buffered().use { writer ->
-                            writer.writeString("This is a test file for FeedbackManager.")
+                            writer.writeString("This is a test file.")
                         }
                     }
                     // begin-snippet: feedback
@@ -110,11 +109,14 @@ private fun DemoContent(
                     val feedback = Feedback(
                         receivers = listOf(mail),
                         subject = "Feedback from $platform Demo App",
-                        text = "Please write your feedback here...\n\n",
-                        textIsHtml = false,
+                        body = "Please write your feedback here...\n\n",
+                        bodyIsHtml = false,
                         attachments = listOf(FeedbackFile(tempFile))
                     )
-                    feedback.startEmailChooser("Select email app")
+                    val success = feedback.startEmailChooser("Select email app")
+                    if (!success) {
+                        scope.launch { snackbarHostState.showSnackbar("No email client found on device!") }
+                    }
                     // end-snippet: feedback
                 }
             ) {
