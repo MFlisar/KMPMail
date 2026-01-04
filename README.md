@@ -70,16 +70,16 @@ implementation(libs.library)
 
 This library is used like following:
 
-<!-- snippet: feedback -->
+<!-- snippet: mail -->
 ```kt
-val feedback = Feedback(
-    receivers = listOf(mail),
+val mail = Mail(
+    receivers = listOf(receiver),
     subject = "Feedback from $platform Demo App",
     body = "Please write your feedback here...\n\n",
     bodyIsHtml = false,
-    attachments = listOf(FeedbackFile(tempFile))
+    attachments = listOf(MailAttachmentFile(tempFile))
 )
-val success = feedback.startEmailChooser("Select email app")
+val success = mail.startEmailChooser("Select email app")
 ```
 <!-- endSnippet -->
 
