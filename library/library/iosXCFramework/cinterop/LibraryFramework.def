@@ -1,0 +1,4 @@
+language = Objective-C
+headers = LibraryFramework-Swift.h
+compilerOpts = -I${frameworkDir}/Headers
+linkerOpts = -framework LibraryFramework

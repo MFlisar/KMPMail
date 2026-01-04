@@ -1,0 +1,27 @@
+# Github Library
+github:
+  name: KMPMail
+  release: 2025
+  namespace: com.michaelflisar.kmpmail
+  license:
+    name: Apache License 2.0
+    path: blob/main/LICENSE
+  other-libraries: https://github.com/MFlisar/MyLibraries
+
+# Maven
+maven:
+  group-id: io.github.mflisar.kmpmail
+  primary-artifact-id: library # used to detect latest release version of the library (dynamically on the published homepage)
+
+# Modules - list of modules [name, artifact-id, description, path]
+modules:
+  - name: Library
+    artifact-id: library
+    description: This is a very small library that allows you to send feedback from an app without internet permission via email, either directly or via an unintrusive notification.
+    path: library/library
+
+# XCFrameworks [name, path, targets (ios, macos)]
+xcframeworks:
+  - name: LibraryFramework
+    path: library/library/iosXCFramework
+    targets: [ios]

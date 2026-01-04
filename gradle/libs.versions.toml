@@ -1,0 +1,65 @@
+[versions]
+
+gradle = 				            "8.13.2"
+kotlin = 				            "2.3.0"
+
+# github release (dokka + maven + binary compatibility)
+dokka =                             "2.1.0"
+gradle-maven-publish-plugin =       "0.35.0"
+binary-compatibility-validator =    "0.18.1"
+
+# compose
+compose =                           "1.9.3"
+compose-material3 =                 "1.9.0"
+compose-icons =                     "1.7.3"
+compose-hot-reload =                "1.0.0"
+
+# android(x)
+desugar =                           "2.1.5"
+activityx-core =                    "1.17.0"
+activityx-activity =                "1.12.2"
+activityx-startup =                 "1.2.0"
+
+# others
+buildkonfig =                       "0.17.1"
+
+[plugins]
+
+# android
+android-application = 			    { id = "com.android.application", 	                version.ref = "gradle" }
+android-library = 			        { id = "com.android.kotlin.multiplatform.library", 	version.ref = "gradle" }
+
+# kotlin
+kotlin-android = 				    { id = "org.jetbrains.kotlin.android", 			    version.ref = "kotlin" }
+kotlin-parcelize =                  { id = "org.jetbrains.kotlin.plugin.parcelize",     version.ref = "kotlin"  }
+kotlin-multiplatform = 			    { id = "org.jetbrains.kotlin.multiplatform", 	    version.ref = "kotlin" }
+kotlin-compose = 				    { id = "org.jetbrains.kotlin.plugin.compose", 	    version.ref = "kotlin" }
+kotlin-serialization = 			    { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+# github release (dokka + maven + binary compatibility)
+dokka =                             { id = "org.jetbrains.dokka",                       version.ref = "dokka" }
+gradle-maven-publish-plugin =       { id = "com.vanniktech.maven.publish.base",         version.ref = "gradle-maven-publish-plugin" }
+binary-compatibility-validator =    { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
+
+# compose
+compose =                           { id = "org.jetbrains.compose",                     version.ref = "compose" }
+compose-hotreload =                 { id = "org.jetbrains.compose.hot-reload",          version.ref = "compose-hot-reload" }
+
+# others
+buildkonfig =                           { id = "com.codingfeline.buildkonfig",              version.ref = "buildkonfig" }
+
+[libraries]
+
+# compose
+compose-runtime =                   { module = "org.jetbrains.compose.runtime:runtime",                     version.ref = "compose" }
+compose-ui =                        { module = "org.jetbrains.compose.ui:ui",                               version.ref = "compose" }
+compose-ui-backhandler =            { module = "org.jetbrains.compose.ui:ui-backhandler",                   version.ref = "compose" }
+compose-material3 =                 { module = "org.jetbrains.compose.material3:material3",                 version.ref = "compose-material3" }
+compose-material-icons-core = 	    { module = "org.jetbrains.compose.material:material-icons-core",        version.ref = "compose-icons" }
+compose-material-icons-extended = 	{ module = "org.jetbrains.compose.material:material-icons-extended",    version.ref = "compose-icons" }
+
+# android
+desugar =			        	    { module = "com.android.tools:desugar_jdk_libs", 	                    version.ref = "desugar" }
+androidx-core =                     { module = "androidx.core:core-ktx",                                    version.ref = "activityx-core" }
+androidx-activity-compose =         { module = "androidx.activity:activity-compose",                        version.ref = "activityx-activity" }
+androidx-startup =                  { module = "androidx.startup:startup-runtime",                          version.ref = "activityx-startup" }
