@@ -1,34 +1,26 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.mflisar.librarytemplate/core?style=for-the-badge&color=blue)](https://central.sonatype.com/artifact/io.github.mflisar.librarytemplate/core) ![API](https://img.shields.io/badge/api-23%2B-brightgreen.svg?style=for-the-badge) ![Kotlin](https://img.shields.io/github/languages/top/MFlisar/LibraryTemplate.svg?style=for-the-badge&amp;color=blueviolet) ![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin_Multiplatform-blue?style=for-the-badge&amp;label=Kotlin) [![License](https://img.shields.io/github/license/MFlisar/LibraryTemplate?style=for-the-badge)](https://github.com/MFlisar/LibraryTemplate/blob/master/LICENSE)
-# LibraryTemplate
-![Android](https://img.shields.io/badge/android-3DDC84?style=for-the-badge) ![iOS](https://img.shields.io/badge/ios-A2AAAD?style=for-the-badge) ![Windows](https://img.shields.io/badge/windows-5382A1?style=for-the-badge) ![macOS](https://img.shields.io/badge/macos-B0B0B0?style=for-the-badge) ![WebAssembly](https://img.shields.io/badge/wasm-624DE7?style=for-the-badge)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.mflisar.kmpmail/library?style=for-the-badge&color=blue)](https://central.sonatype.com/artifact/io.github.mflisar.kmpmail/library) ![API](https://img.shields.io/badge/api-23%2B-brightgreen.svg?style=for-the-badge) ![Kotlin](https://img.shields.io/github/languages/top/MFlisar/KMPMail.svg?style=for-the-badge&amp;color=blueviolet) ![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin_Multiplatform-blue?style=for-the-badge&amp;label=Kotlin) [![License](https://img.shields.io/github/license/MFlisar/KMPMail?style=for-the-badge)](https://github.com/MFlisar/KMPMail/blob/main/LICENSE)
+# KMPMail
+![Android](https://img.shields.io/badge/android-3DDC84?style=for-the-badge) ![iOS](https://img.shields.io/badge/ios-A2AAAD?style=for-the-badge)
 
-This is a **full template library**.
+This library allows you to open the platforms **email chooser**.
 
-- Feature 1
-- Feature 2
-- ...
+- prefill the email subject
+- prefill the email content
+- attach files to the mail
 
 # :information_source: Table of Contents
 
-- [Screenshots](#camera-screenshots)
 - [Supported Platforms](#computer-supported-platforms)
 - [Setup](#wrench-setup)
 - [Usage](#page_facing_up-usage)
-- [Modules](#file_folder-modules)
-- [Demo](#diamonds-demo)
-- [More](#information_source-more)
-
-# :camera: Screenshots
-
-![kotlin](documentation/screenshots/kotlin.png)
+- [Demo](#sparkles-demo)
+- [Other Libraries](#bulb-other-libraries)
 
 # :computer: Supported Platforms
 
-| Module | android | iOS | windows | macOS | wasm |
-|---|---|---|---|---|---|
-| Core | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Module 1 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Module 2 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Module | android | iOS |
+|---|---|---|
+| Library | ✅ | ✅ |
 
 # :wrench: Setup
 
@@ -41,11 +33,9 @@ This is a **full template library**.
 Simply add the dependencies inside your **build.gradle.kts** file.
 
 ```kotlin
-val librarytemplate = "<LATEST-VERSION>"
+val kmpmail = "<LATEST-VERSION>"
 
-implementation("io.github.mflisar.librarytemplate:core:${librarytemplate}")
-implementation("io.github.mflisar.librarytemplate:modules-module1:${librarytemplate}")
-implementation("io.github.mflisar.librarytemplate:modules-module2:${librarytemplate}")
+implementation("io.github.mflisar.kmpmail:library:${kmpmail}")
 ```
 
 </details>
@@ -61,21 +51,17 @@ Define the dependencies inside your **libs.versions.toml** file.
 ```toml
 [versions]
 
-librarytemplate = "<LATEST-VERSION>"
+kmpmail = "<LATEST-VERSION>"
 
 [libraries]
 
-core = { module = "io.github.mflisar.librarytemplate:core", version.ref = "librarytemplate" }
-modules.module1 = { module = "io.github.mflisar.librarytemplate:modules-module1", version.ref = "librarytemplate" }
-modules.module2 = { module = "io.github.mflisar.librarytemplate:modules-module2", version.ref = "librarytemplate" }
+library = { module = "io.github.mflisar.kmpmail:library", version.ref = "kmpmail" }
 ```
 
 And then use the definitions in your projects **build.gradle.kts** file like following:
 
 ```shell
-implementation(libs.core)
-implementation(libs.modules.module1)
-implementation(libs.modules.module2)
+implementation(libs.library)
 ```
 
 </details>
@@ -84,17 +70,23 @@ implementation(libs.modules.module2)
 
 This library is used like following:
 
-...
+<!-- snippet: feedback -->
+```kt
+val feedback = Feedback(
+    receivers = listOf(mail),
+    subject = "Feedback from $platform Demo App",
+    body = "Please write your feedback here...\n\n",
+    bodyIsHtml = false,
+    attachments = listOf(FeedbackFile(tempFile))
+)
+val success = false // feedback.startEmailChooser("Select email app")
+```
+<!-- endSnippet -->
 
-# :file_folder: Modules
-
-- [Module 1](documentation/modules/module1.md)
-
-# :diamonds: Demo
+# :sparkles: Demo
 
 A full [demo](/demo) is included inside the demo module, it shows nearly every usage with working examples.
 
-# :information_source: More
+# :bulb: Other Libraries
 
-- [Information 1](documentation/infos/info1.md)
-- [Information 2](documentation/infos/info2.md)
+You can find more libraries (all multiplatform) of mine that all do work together nicely [here](https://github.com/MFlisar/MyLibraries).
