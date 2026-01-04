@@ -20,33 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 1a) Linkcheck (Markdown, Bilder, intern/extern)
-      - name: Check links with Lychee
-        uses: lycheeverse/lychee-action@v2
-        with:
-          # Passe die Globs/Args an dein Repo an
-          args: --root-dir "$(pwd)" --verbose --no-progress './**/*.md' './**/*.html'
-        env:
-          # hilft gegen GitHub rate limiting bei github.com Links
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # 1b) Lychee-Ordner löschen (Cleanup)
-      - name: Remove lychee folder
-        run: rm -rf lychee
-
-      # 2) MarkdownSnippets (Snippets in .md updaten)
-      - name: Setup .NET (for MarkdownSnippets.Tool)
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.0.x"
-
-      - name: Run MarkdownSnippets
-        run: |
-          dotnet tool install --global MarkdownSnippets.Tool
-          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-          mdsnippets --convention InPlaceOverwrite --omit-snippet-links true
-
-      # 3) Gradle-Task ausführen (updateMarkdownFiles)
+      # 1) Gradle-Task ausführen (updateMarkdownFiles)
       - name: Setup Java (for Gradle)
         uses: actions/setup-java@v4
         with:
@@ -59,7 +33,32 @@ jobs:
           chmod +x ./gradlew
           ./gradlew tooling:updateMarkdownFiles --no-daemon
 
-      # Änderungen committen & pushen (kostenlos, ohne extra Action)
+      # 2a) MarkdownSnippets (install)
+      - name: Setup .NET (for MarkdownSnippets.Tool)
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      # 2a) MarkdownSnippets (Snippets in .md updaten)
+      - name: Run MarkdownSnippets
+        run: |
+          dotnet tool install --global MarkdownSnippets.Tool
+          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+          mdsnippets --convention InPlaceOverwrite --omit-snippet-links true
+
+      # 3a) Linkcheck (Markdown, Bilder, intern/extern)
+      - name: Check links with Lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Passe die Globs/Args an dein Repo an
+          args: --root-dir "$(pwd)" --verbose --no-progress './**/*.md' './**/*.html'
+        env:
+          # hilft gegen GitHub rate limiting bei github.com Links
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 3b) Lychee-Ordner löschen (Cleanup)
+      - name: Remove lychee folder
+        run: rm -rf lychee
+
+      # 4) Änderungen committen & pushen (kostenlos, ohne extra Action)
       - name: Commit & push changes (if any)
         run: |
           if [[ -n "$(git status --porcelain)" ]]; then

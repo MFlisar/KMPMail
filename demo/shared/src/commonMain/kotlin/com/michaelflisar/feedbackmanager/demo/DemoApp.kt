@@ -1,5 +1,7 @@
 package com.michaelflisar.feedbackmanager.demo
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,22 +12,29 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.michaelflisar.democomposables.layout.DemoCollapsibleRegion
 import com.michaelflisar.democomposables.layout.DemoColumn
 import com.michaelflisar.democomposables.layout.DemoRegion
 import com.michaelflisar.democomposables.layout.rememberDemoExpandedRegions
 import com.michaelflisar.kmpmail.Feedback
 import com.michaelflisar.kmpmail.FeedbackFile
-import com.michaelflisar.kmpmail.startEmailChooser
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.io.buffered
@@ -76,6 +85,15 @@ private fun DemoContent(
     val scope = rememberCoroutineScope()
     val regionState = rememberDemoExpandedRegions(ids = listOf(1, 2))
 
+    var mail by remember { mutableStateOf("") }
+    val attachmentContent = "This is a test file."
+
+    val noMailClientDialog = remember { mutableStateOf(false) }
+    val localUriHandler = LocalUriHandler.current
+    val clipboard = LocalClipboard.current
+    val clipboardManager = LocalClipboardManager.current
+
+
     DemoColumn(
         modifier = modifier.padding(all = 16.dp)
     ) {
@@ -83,11 +101,11 @@ private fun DemoContent(
         DemoCollapsibleRegion(
             title = "Demos", regionId = 1, state = regionState
         ) {
-            val mail = remember { mutableStateOf("") }
+
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = mail.value,
-                onValueChange = { mail.value = it },
+                value = mail,
+                onValueChange = { mail = it },
                 label = { Text("Email") }
             )
             Button(
@@ -96,16 +114,16 @@ private fun DemoContent(
                     // no need to make sure its shareable on android, the library does handle that for you...
                     val tempFolderPath = SystemTemporaryDirectory
                     val tempFile = Path(tempFolderPath, "test.txt")
+
                     if (SystemFileSystem.exists(tempFile)) {
                         SystemFileSystem.delete(tempFile)
                     }
                     SystemFileSystem.sink(tempFile).use { sink ->
                         sink.buffered().use { writer ->
-                            writer.writeString("This is a test file.")
+                            writer.writeString(attachmentContent)
                         }
                     }
                     // begin-snippet: feedback
-                    val mail = mail.value
                     val feedback = Feedback(
                         receivers = listOf(mail),
                         subject = "Feedback from $platform Demo App",
@@ -113,14 +131,87 @@ private fun DemoContent(
                         bodyIsHtml = false,
                         attachments = listOf(FeedbackFile(tempFile))
                     )
-                    val success = feedback.startEmailChooser("Select email app")
+                    val success = false // feedback.startEmailChooser("Select email app")
+                    // end-snippet: feedback
                     if (!success) {
                         scope.launch { snackbarHostState.showSnackbar("No email client found on device!") }
+                        noMailClientDialog.value = true
                     }
-                    // end-snippet: feedback
                 }
             ) {
                 Text("Send simple feedback email")
+            }
+        }
+    }
+
+    if (noMailClientDialog.value) {
+        Dialog(
+            onDismissRequest = {
+                noMailClientDialog.value = false
+            }
+        ) {
+            Surface(
+                shape = MaterialTheme.shapes.medium,
+                tonalElevation = 6.dp,
+                modifier = Modifier.padding(24.dp)
+            ) {
+                androidx.compose.foundation.layout.Column(
+                    modifier = Modifier.padding(24.dp).fillMaxWidth(),
+                    verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(
+                        "Kein Mail-Client gefunden!",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                    Text(
+                        "Es ist kein Mail-Client installiert oder eingerichtet. Du kannst die unten stehenden Informationen kopieren und manuell per Mail versenden.",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Text(
+                        "Informationen:",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                    OutlinedTextField(
+                        value = attachmentContent,
+                        onValueChange = {},
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = false,
+                        label = { Text("Anhang") }
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(
+                            onClick = {
+                                scope.launch {
+                                    clipboardManager.setText(
+                                        annotatedString = buildAnnotatedString {
+                                            append(attachmentContent)
+                                        }
+                                    )
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Kopieren")
+                        }
+                        Button(
+                            onClick = {
+                                try {
+                                    localUriHandler.openUri("mailto:$mail")
+                                } catch (e: Exception) {
+                                    scope.launch { snackbarHostState.showSnackbar("Kein Mailto-Handler gefunden!") }
+                                    println(e.message)
+                                }
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Mail öffnen")
+                        }
+                    }
+                }
             }
         }
     }

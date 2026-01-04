@@ -47,11 +47,6 @@ val libraryModuleData = LibraryModuleData(
 // Kotlin
 // ------------------------
 
-compose.resources {
-    packageOfResClass = "${libraryConfig.library.namespace}.shared.resources"
-    publicResClass = true
-}
-
 kotlin {
 
     //-------------
@@ -77,9 +72,6 @@ kotlin {
         // ---------------------
 
         commonMain.dependencies {
-
-            // resources
-            api(compose.components.resources)
 
             // Kotlin
             // ..
