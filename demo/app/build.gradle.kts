@@ -98,8 +98,7 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val commonMain by getting
-        val iosMain by creating { dependsOn(commonMain) }
+        val iosMain by creating { dependsOn(commonMain.get()) }
 
         buildTargets.setupDependencies(
             iosMain,
