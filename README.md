@@ -79,7 +79,7 @@ val feedback = Feedback(
     bodyIsHtml = false,
     attachments = listOf(FeedbackFile(tempFile))
 )
-val success = false // feedback.startEmailChooser("Select email app")
+val success = feedback.startEmailChooser("Select email app")
 ```
 <!-- endSnippet -->
 
