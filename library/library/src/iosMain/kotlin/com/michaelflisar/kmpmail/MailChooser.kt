@@ -6,7 +6,7 @@ import platform.Foundation.dataWithContentsOfURL
 import platform.MessageUI.MFMailComposeViewController
 import platform.UIKit.UIApplication
 
-object MailChooser {
+internal object MailChooser {
 
     fun sendMail(
         receivers: List<String>,

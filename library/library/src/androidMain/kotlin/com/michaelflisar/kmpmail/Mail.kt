@@ -6,12 +6,12 @@ import android.net.Uri
 import androidx.core.text.HtmlCompat
 import com.michaelflisar.cachefileprovider.CachedFileProvider
 
-actual fun Feedback.startEmailChooser(
+actual fun Mail.startEmailChooser(
     chooserTitle: String,
 ): Boolean {
     val intent = buildIntent(
         context = AppContextProvider.context,
-        feedback = this,
+        mail = this,
         chooserTitle = chooserTitle
     )
     try {
@@ -28,33 +28,33 @@ actual fun Feedback.startEmailChooser(
 
 private fun buildIntent(
     context: Context,
-    feedback: Feedback,
+    mail: Mail,
     chooserTitle: String,
 ): Intent {
-    val single = feedback.attachments.size == 1
+    val single = mail.attachments.size == 1
     val intent = Intent(if (single) Intent.ACTION_SEND else Intent.ACTION_SEND_MULTIPLE)
     intent.type = if (single) "message/rfc822" else "text/plain"
-    intent.putExtra(Intent.EXTRA_EMAIL, feedback.receivers.toTypedArray())
-    intent.putExtra(Intent.EXTRA_SUBJECT, feedback.subject)
-    if (feedback.body != null && feedback.body.isNotEmpty()) {
+    intent.putExtra(Intent.EXTRA_EMAIL, mail.receivers.toTypedArray())
+    intent.putExtra(Intent.EXTRA_SUBJECT, mail.subject)
+    if (mail.body != null && mail.body.isNotEmpty()) {
         intent.putExtra(
             /* name = */ Intent.EXTRA_TEXT,
             /* value = */
-            if (feedback.bodyIsHtml) HtmlCompat.fromHtml(
-                feedback.body,
+            if (mail.bodyIsHtml) HtmlCompat.fromHtml(
+                mail.body,
                 HtmlCompat.FROM_HTML_MODE_LEGACY
-            ) else feedback.body
+            ) else mail.body
         )
     }
 
-    if (feedback.attachments.size == 1) {
-        val attachment = feedback.attachments[0]
+    if (mail.attachments.size == 1) {
+        val attachment = mail.attachments[0]
         val uri = copyToCache(context, attachment)
         intent.putExtra(Intent.EXTRA_STREAM, uri)
-    } else if (feedback.attachments.size > 1) {
+    } else if (mail.attachments.size > 1) {
         val uris = ArrayList<Uri>()
-        for (i in feedback.attachments.indices) {
-            val attachment = feedback.attachments[i]
+        for (i in mail.attachments.indices) {
+            val attachment = mail.attachments[i]
             val uri = copyToCache(context, attachment)
             uris.add(uri)
         }
@@ -62,7 +62,7 @@ private fun buildIntent(
     }
 
     var flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    if (feedback.attachments.isNotEmpty())
+    if (mail.attachments.isNotEmpty())
         flags = flags or Intent.FLAG_GRANT_READ_URI_PERMISSION
 
     intent.flags = flags
@@ -71,7 +71,7 @@ private fun buildIntent(
     }
 }
 
-private fun copyToCache(context: Context, file: FeedbackFile): Uri {
+private fun copyToCache(context: Context, file: MailAttachmentFile): Uri {
     // 1) copy input file to cache file => return a simple file (not shareable!)
     val cacheFile = CachedFileProvider.copyFileToCache(
         context,

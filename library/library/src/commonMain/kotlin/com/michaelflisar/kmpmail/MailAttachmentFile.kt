@@ -7,8 +7,6 @@ import kotlinx.io.files.Path
  *
  * @param path The path to the file
  */
-actual class MailAttachmentFile(
-    val path: String,
-) {
-    actual constructor(path: Path) : this(path.toString())
+expect class MailAttachmentFile {
+    constructor(path: Path)
 }

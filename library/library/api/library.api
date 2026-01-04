@@ -15,17 +15,17 @@ public final class com/michaelflisar/kmpmail/AppContextProvider$Companion {
 	public final fun setContext (Landroid/content/Context;)V
 }
 
-public final class com/michaelflisar/kmpmail/Feedback {
+public final class com/michaelflisar/kmpmail/Mail {
 	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZLjava/util/List;)V
 	public synthetic fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZLjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAttachments ()Ljava/util/List;
+	public final fun getBody ()Ljava/lang/String;
+	public final fun getBodyIsHtml ()Z
 	public final fun getReceivers ()Ljava/util/List;
 	public final fun getSubject ()Ljava/lang/String;
-	public final fun getText ()Ljava/lang/String;
-	public final fun getTextIsHtml ()Z
 }
 
-public final class com/michaelflisar/kmpmail/FeedbackFile {
+public final class com/michaelflisar/kmpmail/MailAttachmentFile {
 	public fun <init> (Ljava/io/File;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/io/File;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lkotlinx/io/files/Path;)V
@@ -33,12 +33,7 @@ public final class com/michaelflisar/kmpmail/FeedbackFile {
 	public final fun getUri ()Landroid/net/Uri;
 }
 
-public final class com/michaelflisar/kmpmail/FeedbackKt {
-	public static final fun executeTest ()Ljava/lang/String;
-}
-
-public final class com/michaelflisar/kmpmail/Feedback_androidKt {
-	public static final fun startEmailChooser (Lcom/michaelflisar/kmpmail/Feedback;Ljava/lang/String;)V
-	public static final fun test ()Ljava/lang/String;
+public final class com/michaelflisar/kmpmail/MailKt {
+	public static final fun startEmailChooser (Lcom/michaelflisar/kmpmail/Mail;Ljava/lang/String;)Z
 }
 

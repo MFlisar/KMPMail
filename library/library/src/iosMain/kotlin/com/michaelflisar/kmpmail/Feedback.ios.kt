@@ -1,6 +1,6 @@
 package com.michaelflisar.kmpmail
 
-actual fun Feedback.startEmailChooser(
+actual fun Mail.startEmailChooser(
     chooserTitle: String,
 ): Boolean {
     return MailChooser.sendMail(

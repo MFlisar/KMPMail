@@ -1,4 +1,3 @@
-import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
 
 plugins {
@@ -12,13 +11,6 @@ dependencies {
 }
 
 dokka {
-
-    val config = Config.read(rootProject)
     val libraryConfig = LibraryConfig.read(rootProject)
-
     moduleName.set(libraryConfig.library.name)
-
-    //dokkaPublications.html {
-    //    includes.from("DocsModule.md")
-    //}
 }

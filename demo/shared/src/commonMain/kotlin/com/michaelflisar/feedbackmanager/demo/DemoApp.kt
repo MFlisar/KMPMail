@@ -33,8 +33,8 @@ import com.michaelflisar.democomposables.layout.DemoCollapsibleRegion
 import com.michaelflisar.democomposables.layout.DemoColumn
 import com.michaelflisar.democomposables.layout.DemoRegion
 import com.michaelflisar.democomposables.layout.rememberDemoExpandedRegions
-import com.michaelflisar.kmpmail.Feedback
-import com.michaelflisar.kmpmail.FeedbackFile
+import com.michaelflisar.kmpmail.Mail
+import com.michaelflisar.kmpmail.MailAttachmentFile
 import com.michaelflisar.kmpmail.startEmailChooser
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -86,7 +86,7 @@ private fun DemoContent(
     val scope = rememberCoroutineScope()
     val regionState = rememberDemoExpandedRegions(ids = listOf(1, 2))
 
-    var mail by remember { mutableStateOf("") }
+    var receiver by remember { mutableStateOf("") }
     val attachmentContent = "This is a test file."
 
     val noMailClientDialog = remember { mutableStateOf(false) }
@@ -105,8 +105,8 @@ private fun DemoContent(
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = mail,
-                onValueChange = { mail = it },
+                value = receiver,
+                onValueChange = { receiver = it },
                 label = { Text("Email") }
             )
             Button(
@@ -124,16 +124,16 @@ private fun DemoContent(
                             writer.writeString(attachmentContent)
                         }
                     }
-                    // begin-snippet: feedback
-                    val feedback = Feedback(
-                        receivers = listOf(mail),
+                    // begin-snippet: mail
+                    val mail = Mail(
+                        receivers = listOf(receiver),
                         subject = "Feedback from $platform Demo App",
                         body = "Please write your feedback here...\n\n",
                         bodyIsHtml = false,
-                        attachments = listOf(FeedbackFile(tempFile))
+                        attachments = listOf(MailAttachmentFile(tempFile))
                     )
-                    val success = feedback.startEmailChooser("Select email app")
-                    // end-snippet: feedback
+                    val success = mail.startEmailChooser("Select email app")
+                    // end-snippet: mail
                     if (!success) {
                         scope.launch { snackbarHostState.showSnackbar("No email client found on device!") }
                         noMailClientDialog.value = true
@@ -206,7 +206,7 @@ private fun DemoContent(
                         Button(
                             onClick = {
                                 try {
-                                    localUriHandler.openUri("mailto:$mail")
+                                    localUriHandler.openUri("mailto:$receiver")
                                 } catch (e: Exception) {
                                     scope.launch { snackbarHostState.showSnackbar("Kein Mailto-Handler gefunden!") }
                                     println(e.message)

@@ -1,7 +1,7 @@
 package com.michaelflisar.kmpmail
 
 /**
- * A file to be attached to the feedback email
+ * Represents an email to be sent
  *
  * @param receivers The email addresses of the receivers
  * @param subject The subject of the email
@@ -9,12 +9,12 @@ package com.michaelflisar.kmpmail
  * @param bodyIsHtml Whether the body is in HTML format
  * @param attachments The files to be attached to the email
  */
-class Feedback(
+class Mail(
     val receivers: List<String>,
     val subject: String,
     val body: String? = null,
     val bodyIsHtml: Boolean = false,
-    val attachments: List<FeedbackFile> = emptyList(),
+    val attachments: List<MailAttachmentFile> = emptyList(),
 )
 
 /**
@@ -24,4 +24,4 @@ class Feedback(
  *
  * @return true if the email chooser was started successfully, false otherwise
  */
-expect fun Feedback.startEmailChooser(chooserTitle: String) : Boolean
+expect fun Mail.startEmailChooser(chooserTitle: String) : Boolean

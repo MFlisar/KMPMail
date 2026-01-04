@@ -4,7 +4,7 @@ import android.net.Uri
 import kotlinx.io.files.Path
 import java.io.File
 
-actual class FeedbackFile internal constructor(
+actual class MailAttachmentFile internal constructor(
     val uri: Uri,
     val cacheFileName: String = uri.lastPathSegment ?: "file",
 ) {
