@@ -35,6 +35,7 @@ import com.michaelflisar.democomposables.layout.DemoRegion
 import com.michaelflisar.democomposables.layout.rememberDemoExpandedRegions
 import com.michaelflisar.kmpmail.Feedback
 import com.michaelflisar.kmpmail.FeedbackFile
+import com.michaelflisar.kmpmail.startEmailChooser
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.io.buffered
@@ -131,7 +132,7 @@ private fun DemoContent(
                         bodyIsHtml = false,
                         attachments = listOf(FeedbackFile(tempFile))
                     )
-                    val success = false // feedback.startEmailChooser("Select email app")
+                    val success = feedback.startEmailChooser("Select email app")
                     // end-snippet: feedback
                     if (!success) {
                         scope.launch { snackbarHostState.showSnackbar("No email client found on device!") }
@@ -177,7 +178,9 @@ private fun DemoContent(
                         onValueChange = {},
                         modifier = Modifier.fillMaxWidth(),
                         enabled = false,
-                        label = { Text("Anhang") }
+                        label = { Text("Anhang") },
+                        minLines = 3,
+                        maxLines = 3
                     )
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -188,14 +191,17 @@ private fun DemoContent(
                                 scope.launch {
                                     clipboardManager.setText(
                                         annotatedString = buildAnnotatedString {
+                                            appendLine("Test File:")
                                             append(attachmentContent)
+                                            appendLine("")
+                                            appendLine("User Feedback:")
                                         }
                                     )
                                 }
                             },
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("Kopieren")
+                            Text("Copy to Clipboard")
                         }
                         Button(
                             onClick = {
