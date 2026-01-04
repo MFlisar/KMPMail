@@ -12,10 +12,9 @@ This library allows you to open the platforms **email chooser**.
 
 - [Supported Platforms](#computer-supported-platforms)
 - [Setup](#wrench-setup)
-- [Usage](#rocket-usage)
+- [Usage](#page_facing_up-usage)
 - [Demo](#sparkles-demo)
 - [Other Libraries](#bulb-other-libraries)
-- [API Documentation](#books-api-documentation)
 
 # :computer: Supported Platforms
 
@@ -67,19 +66,26 @@ implementation(libs.library)
 
 </details>
 
-# :rocket: Usage
+# :page_facing_up: Usage
 
 This library is used like following:
 
-snippet: mail
+<!-- snippet: mail -->
+```kt
+val mail = Mail(
+    receivers = listOf(receiver),
+    subject = "Feedback from $platform Demo App",
+    body = "Please write your feedback here...\n\n",
+    bodyIsHtml = false,
+    attachments = listOf(MailAttachmentFile(tempFile))
+)
+val success = mail.startEmailChooser("Select email app")
+```
+<!-- endSnippet -->
 
 # :sparkles: Demo
 
 A full [demo](/demo) is included inside the demo module, it shows nearly every usage with working examples.
-
-# :books: API Documentation
-
-Check out the [API documentation](https://MFlisar.github.io/KMPMail/).
 
 # :bulb: Other Libraries
 
