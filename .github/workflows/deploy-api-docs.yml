@@ -25,12 +25,6 @@ jobs:
       - name: Build Dokka HTML
         run: ./gradlew :dokka:dokkaGenerate
 
-      - name: Debug Dokka output
-        run: |
-          ls -la build/dokka || true
-          find build/dokka -maxdepth 4 -type f | head -n 50 || true
-          du -sh build/dokka/* 2>/dev/null || true
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
