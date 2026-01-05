@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    dokka(project(":kmpmail:library"))
+    dokka(project(":kmpmail"))
 }
 
 dokka {
