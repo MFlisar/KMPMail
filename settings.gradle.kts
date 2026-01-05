@@ -70,6 +70,3 @@ include(":dokka")
 
 include(":demo:shared")
 include(":demo:app")
-
-// developer tools (for local tasks only)
-include(":tooling")

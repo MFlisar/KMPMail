@@ -1,3 +1,5 @@
+import com.michaelflisar.kmpdevtools.BuildFilePlugin
+
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
@@ -9,7 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.gradle.maven.publish.plugin) apply false
-    alias(deps.plugins.kmpdevtools.buildplugin) apply false
+    alias(deps.plugins.kmpdevtools.buildplugin) // apply false
 }
 
 // exclude all demo projects from CI builds
@@ -19,4 +21,14 @@ subprojects {
             enabled = false
         }
     }
+}
+// ----------------------------
+// Apply custom build file plugin
+// ----------------------------
+
+
+buildFilePlugin {
+
+    // do not build demo projects in CI
+    excludeDemoFromCI.set(true)
 }
