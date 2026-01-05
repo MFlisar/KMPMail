@@ -3,7 +3,6 @@ import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
 plugins {
     kotlin("jvm") apply false
     alias(libs.plugins.dokka)
-    alias(deps.plugins.kmpdevtools.buildplugin)
 }
 
 dependencies {
