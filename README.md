@@ -4,6 +4,8 @@
 
 This library allows you to open the platforms **email chooser**.
 
+It provides following main features:
+
 - prefill the email subject
 - prefill the email content
 - attach files to the mail
@@ -14,8 +16,8 @@ This library allows you to open the platforms **email chooser**.
 - [Setup](#wrench-setup)
 - [Usage](#rocket-usage)
 - [Demo](#sparkles-demo)
-- [Other Libraries](#bulb-other-libraries)
 - [API Documentation](#books-api-documentation)
+- [Other Libraries](#bulb-other-libraries)
 
 # :computer: Supported Platforms
 
@@ -83,6 +85,8 @@ val mail = Mail(
 val success = mail.startEmailChooser("Select email app")
 ```
 <!-- endSnippet -->
+
+This will start the email chooser of the platform. If it returns `false`, no email clients are installed or set up, so you could fallback to a `mailto:` solution or whatever you want.
 
 # :sparkles: Demo
 
