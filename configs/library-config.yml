@@ -6,7 +6,6 @@ github:
   license:
     name: Apache License 2.0
     path: blob/main/LICENSE
-  other-libraries: https://github.com/MFlisar/MyLibraries
 
 # Maven
 maven:
