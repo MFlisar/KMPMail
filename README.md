@@ -94,4 +94,4 @@ Check out the [API documentation](https://MFlisar.github.io/KMPMail/).
 
 # :bulb: Other Libraries
 
-You can find more libraries (all multiplatform) of mine that all do work together nicely [here](https://github.com/MFlisar/MyLibraries).
+You can find more libraries (all multiplatform) of mine that all do work together nicely [here](https://mflisar.github.io/Libraries/).
