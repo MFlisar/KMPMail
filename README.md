@@ -27,23 +27,7 @@ It provides following main features:
 
 # :wrench: Setup
 
-<details>
-
-<summary>Dependencies</summary>
-
-<br>
-
-Simply add the dependencies inside your **build.gradle.kts** file.
-
-```kotlin
-val kmpmail = "<LATEST-VERSION>"
-
-implementation("io.github.mflisar.kmpmail:library:${kmpmail}")
-```
-
-</details>
-
-<details>
+<details open>
 
 <summary>Version Catalogue</summary>
 
@@ -63,8 +47,24 @@ library = { module = "io.github.mflisar.kmpmail:library", version.ref = "kmpmail
 
 And then use the definitions in your projects **build.gradle.kts** file like following:
 
-```shell
+```java
 implementation(libs.library)
+```
+
+</details>
+
+<details>
+
+<summary>Dependencies</summary>
+
+<br>
+
+Simply add the dependencies inside your **build.gradle.kts** file.
+
+```kotlin
+val kmpmail = "<LATEST-VERSION>"
+
+implementation("io.github.mflisar.kmpmail:library:${kmpmail}")
 ```
 
 </details>
