@@ -82,7 +82,7 @@ kotlin {
         commonMain.dependencies {
 
             // Kotlin
-            api(deps.kotlinx.io.core)
+            api(libs.kotlinx.io.core)
 
         }
 
