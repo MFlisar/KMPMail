@@ -1,0 +1,7 @@
+This library allows you to open the platforms **email chooser**.
+
+It provides following main features:
+
+- prefill the email subject
+- prefill the email content
+- attach files to the mail

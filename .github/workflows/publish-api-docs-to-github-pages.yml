@@ -1,4 +1,4 @@
-name: Deploy Dokka API Documentation to GitHub Pages
+name: Deploy and publish the dokka API documentation to GitHub pages
 
 on:
   push:

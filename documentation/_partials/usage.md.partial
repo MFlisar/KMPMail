@@ -1,3 +1,5 @@
 This library is used like following:
 
 snippet: mail
+
+This will start the email chooser of the platform. If it returns `false`, no email clients are installed or set up, so you could fallback to a `mailto:` solution or whatever you want.

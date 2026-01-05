@@ -88,7 +88,7 @@ kotlin {
             // Library
             // ------------------------
 
-            api(project(":kmpmail:library"))
+            api(project(":kmpmail"))
 
         }
     }
