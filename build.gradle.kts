@@ -16,7 +16,7 @@ plugins {
 // Apply custom build file plugin
 // ----------------------------
 
-// provided gradle tasks:
+// provided gradle tasks in root project:
 // * updateMarkdownFiles
 // * macActions
 // * renameProject
