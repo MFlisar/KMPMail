@@ -1,6 +1,6 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.mflisar.kmpmail/library?style=for-the-badge&color=blue)](https://central.sonatype.com/artifact/io.github.mflisar.kmpmail/library) ![API](https://img.shields.io/badge/api-23%2B-brightgreen.svg?style=for-the-badge) ![Kotlin](https://img.shields.io/github/languages/top/MFlisar/KMPMail.svg?style=for-the-badge&amp;color=blueviolet) ![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin_Multiplatform-blue?style=for-the-badge&amp;label=Kotlin) [![License](https://img.shields.io/github/license/MFlisar/KMPMail?style=for-the-badge)](https://github.com/MFlisar/KMPMail/blob/main/LICENSE)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.mflisar.kmpmail/library?style=for-the-badge&color=blue)](https://central.sonatype.com/artifact/io.github.mflisar.kmpmail/library) ![API](https://img.shields.io/badge/api-23%2B-brightgreen.svg?style=for-the-badge) ![Kotlin](https://img.shields.io/github/languages/top/MFlisar/KMPMail.svg?style=for-the-badge&amp;color=blueviolet) ![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin_Multiplatform-blue?style=for-the-badge&amp;label=Kotlin)
 # KMPMail
-![Android](https://img.shields.io/badge/android-3DDC84?style=for-the-badge) ![iOS](https://img.shields.io/badge/ios-A2AAAD?style=for-the-badge)
+![Platforms](https://img.shields.io/badge/PLATFORMS-black?style=for-the-badge) ![Android](https://img.shields.io/badge/android-3DDC84?style=for-the-badge) ![iOS](https://img.shields.io/badge/ios-A2AAAD?style=for-the-badge)
 
 This library allows you to open the platforms **email chooser**.
 
@@ -10,26 +10,26 @@ It provides following main features:
 - prefill the email content
 - attach files to the mail
 
-# :information_source: Table of Contents
+# Table of Contents
 
 - [Supported Platforms](#computer-supported-platforms)
 - [Setup](#wrench-setup)
 - [Usage](#rocket-usage)
 - [Demo](#sparkles-demo)
-- [API Documentation](#books-api-documentation)
+- [API](#books-api)
 - [Other Libraries](#bulb-other-libraries)
 
 # :computer: Supported Platforms
 
 | Module | android | iOS |
 |---|---|---|
-| Library | ✅ | ✅ |
+| library | ✅ | ✅ |
 
 # :wrench: Setup
 
 <details open>
 
-<summary>Version Catalogue</summary>
+<summary><b>Using Version Catalogs</b></summary>
 
 <br>
 
@@ -55,7 +55,7 @@ implementation(libs.library)
 
 <details>
 
-<summary>Dependencies</summary>
+<summary><b>Direct Dependency Notation</b></summary>
 
 <br>
 
@@ -92,7 +92,7 @@ This will start the email chooser of the platform. If it returns `false`, no ema
 
 A full [demo](/demo) is included inside the demo module, it shows nearly every usage with working examples.
 
-# :books: API Documentation
+# :books: API
 
 Check out the [API documentation](https://MFlisar.github.io/KMPMail/).
 
