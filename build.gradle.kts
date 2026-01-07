@@ -26,10 +26,6 @@ plugins {
 // Apply custom build file plugin
 // ----------------------------
 
-// provided gradle tasks in root project:
-// * updateMarkdownFiles
-// * macActions
-// * renameProject
 buildFilePlugin {
 
     // do not build demo projects in CI
