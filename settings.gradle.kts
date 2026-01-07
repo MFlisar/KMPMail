@@ -35,7 +35,7 @@ pluginManagement {
 
 plugins {
     // version catalogue does not work here!
-    id("io.github.mflisar.kmpdevtools.plugins-settings-gradle") version "6.4.0"
+    id("io.github.mflisar.kmpdevtools.plugins-settings-gradle") version "6.4.1"
 }
 
 val settingsPlugin = plugins.getPlugin(com.michaelflisar.kmpdevtools.SettingsFilePlugin::class.java)
@@ -48,15 +48,11 @@ val libraryConfig = com.michaelflisar.kmpdevtools.core.configs.LibraryConfig.rea
 val libraryId = libraryConfig.library.name.lowercase()
 
 // Library Modules
-settingsPlugin.includeModules(libraryId, libraryConfig)
-
-// Library (internal modules)
-include(":library:dokka")
+settingsPlugin.includeModules(libraryId, libraryConfig, includeDokka = true)
 
 // --------------
 // App
 // --------------
 
-include(":demo")
 include(":demo:shared")
 include(":demo:app")
