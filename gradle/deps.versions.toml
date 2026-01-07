@@ -1,8 +1,8 @@
 [versions]
 
-# mflisar (to use local snapshots use "LOCAL-SNAPSHOT" as version)
+# mflisar (local snapshot: "LOCAL-SNAPSHOT")
 kmp-parcelize =             "1.0.1"
-kmpdevtools =               "6.4.2" # change via "updateDevToolsVersion" gradle task! (2x to get the most up-to-date results)
+kmpdevtools =               "6.4.2" # change via "updateDevToolsVersion" gradle task!
 democomposables =           "1.0.2"
 cachefileprovider =         "1.0.0"
 

@@ -18,9 +18,7 @@ plugins {
     // org.jetbrains.compose
     alias(libs.plugins.jetbrains.compose)
     // docs, publishing, validation
-    alias(libs.plugins.dokka)
-    alias(libs.plugins.vanniktech.maven.publish.base)
-    alias(libs.plugins.binary.compatibility.validator)
+    // --
     // build tools
     alias(deps.plugins.kmpdevtools.buildplugin)
     alias(libs.plugins.buildkonfig)

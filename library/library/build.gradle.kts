@@ -91,7 +91,7 @@ kotlin {
         commonMain.dependencies {
 
             // Kotlin
-            api(libs.kotlinx.io.core)
+            api(libs.jetbrains.kotlinx.io.core)
 
         }
 
