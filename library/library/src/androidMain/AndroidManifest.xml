@@ -2,7 +2,7 @@
 
     <application>
         <provider
-            android:name=".AppContextProvider"
+            android:name="com.michaelflisar.kmpmail.AppContextProvider"
             android:authorities="${applicationId}.appcontextprovider"
             android:exported="false"/>
     </application>

@@ -1,6 +1,5 @@
 import com.michaelflisar.kmpdevtools.Targets
-import com.michaelflisar.kmpdevtools.config.LibraryModuleData
-import com.michaelflisar.kmpdevtools.config.sub.AndroidLibraryConfig
+import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
 
@@ -37,17 +36,11 @@ val buildTargets = Targets(
     // web
     wasm = false
 )
-val androidConfig = AndroidLibraryConfig(
+val androidConfig = AndroidLibraryConfig.createManualNamespace(
     compileSdk = app.versions.compileSdk,
     minSdk = app.versions.minSdk,
-    enableAndroidResources = true
-)
-
-val libraryModuleData = LibraryModuleData(
-    project = project,
-    config = config,
-    libraryConfig = libraryConfig,
-    androidConfig = androidConfig
+    enableAndroidResources = true,
+    namespaceAddon = "demo.shared"
 )
 
 // ------------------------
@@ -60,7 +53,10 @@ kotlin {
     // Targets
     //-------------
 
-    buildTargets.setupTargetsLibrary(libraryModuleData)
+    buildTargets.setupTargetsLibrary(project)
+    android {
+        buildTargets.setupTargetsAndroidLibrary(project, config, libraryConfig, androidConfig, this)
+    }
 
     // ------------------------
     // Source Sets

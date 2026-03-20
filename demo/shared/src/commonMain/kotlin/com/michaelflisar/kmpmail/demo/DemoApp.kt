@@ -1,6 +1,7 @@
-package com.michaelflisar.feedbackmanager.demo
+package com.michaelflisar.kmpmail.demo
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -56,7 +57,7 @@ fun DemoApp(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("$appName Demo") },
+                    title = { Text(appName) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary,
@@ -156,9 +157,9 @@ private fun DemoContent(
                 tonalElevation = 6.dp,
                 modifier = Modifier.padding(24.dp)
             ) {
-                androidx.compose.foundation.layout.Column(
+                Column(
                     modifier = Modifier.padding(24.dp).fillMaxWidth(),
-                    verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Text(
                         "Kein Mail-Client gefunden!",

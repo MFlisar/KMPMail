@@ -1,11 +1,11 @@
 [versions]
 
-gradle = 				            "8.13.2"
-kotlin = 				            "2.3.0"
+gradle = 				            "9.1.0"
+kotlin = 				            "2.3.20"
 
 # github release (dokka + maven + binary compatibility)
 dokka =                             "2.1.0"
-vanniktech-maven-publish =          "0.35.0"
+vanniktech-maven-publish =          "0.36.0"
 binary-compatibility-validator =    "0.18.1"
 
 # org.jetbrains.compose
@@ -41,7 +41,6 @@ android-application = 			                    { id = "com.android.application", 	
 android-library = 			                        { id = "com.android.kotlin.multiplatform.library", 	version.ref = "gradle" }
 
 # org.jetbrains.kotlin
-jetbrains-kotlin-android = 				            { id = "org.jetbrains.kotlin.android", 			    version.ref = "kotlin" }
 jetbrains-kotlin-parcelize =                        { id = "org.jetbrains.kotlin.plugin.parcelize",     version.ref = "kotlin"  }
 jetbrains-kotlin-multiplatform = 			        { id = "org.jetbrains.kotlin.multiplatform", 	    version.ref = "kotlin" }
 jetbrains-kotlin-compose = 				            { id = "org.jetbrains.kotlin.plugin.compose", 	    version.ref = "kotlin" }

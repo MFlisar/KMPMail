@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.michaelflisar.feedbackmanager.demo.DemoApp
+import com.michaelflisar.kmpmail.demo.BuildKonfig
+import com.michaelflisar.kmpmail.demo.DemoApp
 import kotlinx.coroutines.Dispatchers
 
 class MainActivity : ComponentActivity() {
