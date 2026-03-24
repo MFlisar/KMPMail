@@ -13,6 +13,7 @@ It provides following main features:
 # Table of Contents
 
 - [Supported Platforms](#computer-supported-platforms)
+- [Versions](#arrow_right-versions)
 - [Setup](#wrench-setup)
 - [Usage](#rocket-usage)
 - [Demo](#sparkles-demo)
@@ -24,6 +25,14 @@ It provides following main features:
 | Module | android | iOS |
 |---|---|---|
 | library | ✅ | ✅ |
+
+# :arrow_right: Versions
+
+| Dependency | Version |
+|---|---|
+| Kotlin | `2.3.20` |
+| Jetbrains Compose | `1.9.3` |
+| Jetbrains Compose Material3 | `1.9.0` |
 
 # :wrench: Setup
 
@@ -42,13 +51,13 @@ kmpmail = "<LATEST-VERSION>"
 
 [libraries]
 
-library = { module = "io.github.mflisar.kmpmail:library", version.ref = "kmpmail" }
+kmpmail-library = { module = "io.github.mflisar.kmpmail:library", version.ref = "kmpmail" }
 ```
 
 And then use the definitions in your projects **build.gradle.kts** file like following:
 
 ```java
-implementation(libs.library)
+implementation(libs.kmpmail.library)
 ```
 
 </details>
