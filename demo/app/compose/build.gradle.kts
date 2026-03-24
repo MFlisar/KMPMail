@@ -1,6 +1,7 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.michaelflisar.kmpdevtools.Targets
 import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
+import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.AppConfig
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
@@ -97,12 +98,7 @@ kotlin {
 
         val iosMain by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(
-            iosMain,
-            sourceSets,
-            buildTargets,
-            listOf(com.michaelflisar.kmpdevtools.core.Platform.IOS)
-        )
+        buildTargets.setupDependencies(iosMain, sourceSets, listOf(Platform.IOS))
 
         // ------------------------
         // dependencies
