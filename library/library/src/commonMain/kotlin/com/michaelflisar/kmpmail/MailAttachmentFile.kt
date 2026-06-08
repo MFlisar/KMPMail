@@ -4,9 +4,12 @@ import kotlinx.io.files.Path
 
 /**
  * Represents a file to be attached to an email
- *
- * @param path The path to the file
  */
 expect class MailAttachmentFile {
+    /**
+     * Creates a new MailAttachmentFile with the given path
+     *
+     * @param path The path to the file
+     */
     constructor(path: Path)
 }

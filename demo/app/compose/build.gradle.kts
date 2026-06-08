@@ -1,10 +1,8 @@
-import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.michaelflisar.kmpdevtools.Targets
-import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
+import com.michaelflisar.kmpdevtools.BuildFileUtil
 import com.michaelflisar.kmpdevtools.core.Platform
-import com.michaelflisar.kmpdevtools.core.configs.AppConfig
-import com.michaelflisar.kmpdevtools.core.configs.Config
-import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.configs.*
+import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
     // kmp + app/library
@@ -17,8 +15,7 @@ plugins {
     // docs, publishing, validation
     // --
     // build tools
-    alias(deps.plugins.kmpdevtools.buildplugin)
-    alias(libs.plugins.buildkonfig)
+    alias(mflisar.plugins.kmpdevtools.buildplugin)
     // others
     // ...
 }
@@ -27,9 +24,7 @@ plugins {
 // Setup
 // ------------------------
 
-val config = Config.read(rootProject)
-val libraryConfig = LibraryConfig.read(rootProject)
-val appConfig = AppConfig.read(rootProject)
+val module = AppModuleConfig.readManual(project)
 
 val buildTargets = Targets(
     // mobile
@@ -42,27 +37,16 @@ val buildTargets = Targets(
     wasm = false
 )
 
-val androidConfig = AndroidLibraryConfig.createManualNamespace(
+val androidConfig = AndroidLibraryConfig.createFromPath(
+    appModuleConfig = module,
     compileSdk = app.versions.compileSdk,
     minSdk = app.versions.minSdk,
-    enableAndroidResources = true,
-    namespaceAddon = "demo.app.compose"
+    enableAndroidResources = true
 )
 
 // ------------------------
 // Kotlin
 // ------------------------
-
-buildkonfig {
-    packageName = appConfig.packageName
-    exposeObjectWithName = "BuildKonfig"
-    defaultConfigs {
-        buildConfigField(Type.STRING, "versionName", appConfig.versionName)
-        buildConfigField(Type.INT, "versionCode", appConfig.versionCode.toString())
-        buildConfigField(Type.STRING, "packageName", appConfig.packageName)
-        buildConfigField(Type.STRING, "appName", appConfig.name)
-    }
-}
 
 kotlin {
 
@@ -70,13 +54,12 @@ kotlin {
     // Targets
     //-------------
 
-    buildTargets.setupTargetsApp(project)
+    buildTargets.setupTargetsApp(module)
     android {
-        buildTargets.setupTargetsAndroidLibrary(project, config, libraryConfig, androidConfig, this)
+        buildTargets.setupTargetsAndroidLibrary(module, androidConfig, this)
     }
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
@@ -98,7 +81,11 @@ kotlin {
 
         val iosMain by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(iosMain, sourceSets, listOf(Platform.IOS))
+        setupDependencies(module, buildTargets, sourceSets) {
+
+            Platform.IOS addSourceSet iosMain
+
+        }
 
         // ------------------------
         // dependencies

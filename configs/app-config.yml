@@ -1,5 +1,4 @@
 # App
 name: KMPMail Demo
-package-name: com.michaelflisar.kmpmail.demo
-version-code: 1
+namespace: com.michaelflisar.kmpmail.demo
 version-name: 1.0.0

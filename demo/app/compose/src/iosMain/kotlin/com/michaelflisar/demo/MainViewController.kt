@@ -1,6 +1,7 @@
 package com.michaelflisar.demo
 
 import androidx.compose.ui.window.ComposeUIViewController
+import com.michaelflisar.kmpmail.demo.BuildKonfig
 import com.michaelflisar.kmpmail.demo.DemoApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
